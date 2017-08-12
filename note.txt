@@ -1,0 +1,12 @@
+基础环境的搭建
+1.创建maven工程
+2.引入项目依赖的jar包
+	Spring
+	Mybatis
+	SpringMVC
+	数据库驱动包
+	其他（JSTL，Servlet-api，junit）
+3.引入bootstrap前端框架
+4.编写SSM整合的关键配置文件
+	web.xml,SpringMVC,spring,mybatis
+
