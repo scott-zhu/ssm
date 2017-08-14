@@ -9,4 +9,10 @@
 3.引入bootstrap前端框架
 4.编写SSM整合的关键配置文件
 	web.xml,SpringMVC,spring,mybatis
-
+5.利用mybatis的逆向工程生成对应的bean和mapper
+6.测试mapper
+7.使用bootstrap,ajax，搭建前端页面
+	1）显示数据
+	2）实现分页功能
+8.实现新增功能
+9.整合校验：前端采用ajax校验，后端采用JSR303校验
