@@ -1,9 +1,11 @@
 package ssm.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +30,38 @@ import ssm.service.EmployeeService;
 public class EmployeeController {
 	@Autowired
 	EmployeeService empService;
+	
+	@RequestMapping(value="/emp/{ids}",method=RequestMethod.DELETE)
+	@ResponseBody
+	public Msg deleteEmp(@PathVariable("ids") String ids){
+		if (ids.contains("-")) {
+			List<Integer> del_ids = new ArrayList<>();
+			String[] str_ids = ids.split("-");
+			for (String string : str_ids) {
+				del_ids.add(Integer.parseInt(string));
+			}
+			empService.deleteBatch(del_ids);		
+		}else {
+			Integer id = Integer.parseInt(ids);
+			empService.deleteEmp(id);
+		}
+		return Msg.success();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/emp/{empId}",method=RequestMethod.PUT)
+	public Msg saveEmp(Employee employee,HttpServletRequest request){
+		
+		empService.updateEmp(employee);
+		System.out.println(employee);
+		return Msg.success();
+	}
+	@RequestMapping(value="/emp/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public Msg getEmp(@PathVariable("id")Integer id){
+		Employee employee = empService.getEmp(id);
+		return Msg.success().add("emp", employee);
+	}
 	
 	@RequestMapping("/checkuser")
 	@ResponseBody
